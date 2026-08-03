@@ -40,7 +40,7 @@
 
 > *Trình bày phép tính:*
 >
-> - Công thức: $\text{số lượng chunk} = \lceil (\text{độ\_dài\_tài\_liệu} - \text{độ\_chồng\_chéo}) / (\text{kích\_thước\_chunk} - \text{độ\_chồng\_chéo}) \rceil$
+> - Công thức: $\text{Số lượng chunk} = \left\lceil \frac{\text{Độ dài tài liệu} - \text{Độ chồng chéo}}{\text{Kích thước chunk} - \text{Độ chồng chéo}} \right\rceil$
 > - Phép tính: $\lceil (10000 - 50) / (500 - 50) \rceil = \lceil 9950 / 450 \rceil = \lceil 22.11 \rceil = 23$
 >   *Đáp án:* 23 chunks.
 
