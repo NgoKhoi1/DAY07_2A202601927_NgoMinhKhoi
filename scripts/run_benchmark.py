@@ -20,7 +20,8 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from ingest import build_knowledge_base
 from src.agent import KnowledgeBaseAgent
@@ -29,8 +30,9 @@ from src.embeddings import LocalEmbedder
 
 load_dotenv(override=False)
 
+# Đường dẫn tuyệt đối tính từ vị trí file này — chạy đúng dù bạn đứng ở thư mục nào khi gọi script.
 # Đổi thành thư mục dữ liệu thật của nhóm (vd. "data/k4_ecommerce" sau khi đã bổ sung tài liệu thật).
-DATA_DIR = "data/_test_crawl"
+DATA_DIR = str(PROJECT_ROOT / "data" / "_test_crawl")
 
 # Mỗi phần tử: (câu hỏi, metadata_filter hoặc None).
 # K4 yêu cầu: ít nhất 1 câu phải cần metadata_filter={"customer_role": "seller"} hoặc "buyer".

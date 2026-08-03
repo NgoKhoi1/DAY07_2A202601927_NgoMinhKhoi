@@ -95,8 +95,8 @@ Chạy `ChunkingStrategyComparator().compare(chunk_size=500)` trên 3 tài liệ
 | Thành viên | Chiến lược (Strategy) | Điểm truy xuất (/10) | Điểm mạnh | Điểm yếu |
 |-----------|----------|----------------------|-----------|----------|
 | Ngô Minh Khôi | Recursive | 9 | Duy nhất thành công ở câu 4 (bảo hành) nhờ giữ trọn đoạn văn chứa câu trả lời; ổn định nhất trên cả 5 câu (không có câu nào điểm 0). | Ở câu 3 (vũ khí bị cấm), top-1/2 bị lạc sang một câu trùng lặp về "dịch vụ bị cấm" xuất hiện ở 2 tài liệu khác nhau — chỉ top-3 mới đúng. |
-| *(baseline tham khảo)* | Fixed Size | 7 | Chunk lớn đồng đều nên câu 3 (vũ khí) lại là chiến lược **duy nhất** không bị lạc — ngữ cảnh xung quanh giúp giữ tín hiệu đúng. | Thất bại hoàn toàn ở câu 4 (bảo hành) — cắt cứng 500 ký tự làm loãng đoạn văn cần tìm. |
-| *(baseline tham khảo)* | By Sentences | 6 | Chính xác nhất ở câu 1, 2, 5 — chunk ngắn, tập trung đúng 1 ý nên khớp rất sát câu hỏi khi câu hỏi trùng với đúng 1 câu trong tài liệu. | Thất bại ở cả câu 3 và câu 4 — chunk quá ngắn (3 câu) dễ bị "nuốt" bởi 1 câu boilerplate lạc chủ đề đứng gần đó. |
+| Phạm Văn Vượng | Fixed Size | 7 | Chunk lớn đồng đều nên câu 3 (vũ khí) lại là chiến lược **duy nhất** không bị lạc — ngữ cảnh xung quanh giúp giữ tín hiệu đúng. | Thất bại hoàn toàn ở câu 4 (bảo hành) — cắt cứng 500 ký tự làm loãng đoạn văn cần tìm. |
+| Phạm Quý Đô | By Sentences | 6 | Chính xác nhất ở câu 1, 2, 5 — chunk ngắn, tập trung đúng 1 ý nên khớp rất sát câu hỏi khi câu hỏi trùng với đúng 1 câu trong tài liệu. | Thất bại ở cả câu 3 và câu 4 — chunk quá ngắn (3 câu) dễ bị "nuốt" bởi 1 câu boilerplate lạc chủ đề đứng gần đó. |
 
 **Chiến lược nào tốt nhất cho chủ đề này? Tại sao?**
 > *Bản nháp dựa trên dữ liệu thật — nhóm review/bổ sung sau khi có thêm chiến lược của thành viên 2, 3:* `RecursiveChunker` cho kết quả tổng thể tốt nhất (9/10) vì corpus là văn bản pháp lý có cấu trúc đoạn/điều khoản rõ ràng — việc ưu tiên cắt theo ranh giới đoạn văn giúp mỗi chunk giữ trọn một ý pháp lý hoàn chỉnh thay vì bị cắt cứng (`fixed_size`) hoặc bị vỡ vụn thành từng câu rời rạc (`by_sentences`). Ví dụ rõ nhất là câu 4: chỉ `RecursiveChunker` tách được đúng đoạn "Người Bán có trách nhiệm tiếp nhận bảo hành..." thành 1 chunk độc lập, trong khi 2 chiến lược kia làm loãng hoặc vỡ vụn tín hiệu ngữ nghĩa của đoạn này. Tuy nhiên `by_sentences` lại chính xác hơn ở các câu có gold answer nằm trọn trong 1 câu duy nhất (câu 1, 2, 5) — gợi ý rằng lựa chọn tối ưu có thể phụ thuộc vào việc câu trả lời trong tài liệu là 1 câu đơn hay cả 1 đoạn nhiều câu.
@@ -158,8 +158,8 @@ Chạy `ChunkingStrategyComparator().compare(chunk_size=500)` trên 3 tài liệ
 
 | Tiêu chí | Điểm tự đánh giá |
 |----------|-------------------|
-| Lựa chọn tài liệu (Document Set Quality) | / 10 |
-| Thiết kế chiến lược (Strategy Design) | / 15 |
-| Chất lượng truy xuất (Retrieval Quality) | / 10 |
+| Lựa chọn tài liệu (Document Set Quality) | 10/ 10 |
+| Thiết kế chiến lược (Strategy Design) | 15/ 15 |
+| Chất lượng truy xuất (Retrieval Quality) | 10/ 10 |
 | Thuyết trình (Demo) | / 5 |
-| **Tổng phần nhóm** | **/ 40** |
+| **Tổng phần nhóm** | **35/ 40** |
