@@ -69,14 +69,14 @@ Chạy `ChunkingStrategyComparator().compare()` trên 2-3 tài liệu:
 ```
 
 **Thành viên 2 — [Tên]**
-- **Loại chiến lược:**
-- **Mô tả & lý do chọn:**
-- **Code snippet (nếu custom):**
+- **Loại chiến lược:** Fixed Size (`FixedSizeChunker`)
+- **Mô tả & lý do chọn:** Dùng chiến lược có sẵn `FixedSizeChunker(chunk_size=500, overlap=50)` làm đường cơ sở (baseline) để đối chiếu với các chiến lược khác trong nhóm. Ưu điểm là đơn giản, chunk có độ dài đồng đều, không phụ thuộc cấu trúc câu/đoạn của văn bản — phù hợp để so sánh "chi phí" (số lượng chunk, thời gian embed) so với các chiến lược phức tạp hơn. Nhược điểm với văn bản chính sách TMĐT nhiều điều/khoản: dễ cắt cứng giữa chừng một quy định, làm loãng ngữ nghĩa của chunk khi câu trả lời nằm gần ranh giới 500 ký tự.
+- **Code snippet (nếu custom):** *(không dùng custom — dùng `FixedSizeChunker` có sẵn trong `src/chunking.py`)*
 
 **Thành viên 3 — [Tên]**
-- **Loại chiến lược:**
-- **Mô tả & lý do chọn:**
-- **Code snippet (nếu custom):**
+- **Loại chiến lược:** By Sentences (`SentenceChunker`)
+- **Mô tả & lý do chọn:** Dùng `SentenceChunker(max_sentences_per_chunk=3)` — chia theo ranh giới câu thay vì ký tự, phù hợp với văn bản chính sách vì mỗi câu thường diễn đạt trọn một quy định/điều kiện. Ưu điểm: chunk luôn kết thúc trọn câu, không bao giờ cắt giữa chừng một câu như Fixed Size; đặc biệt chính xác khi gold answer nằm gọn trong 1 câu. Nhược điểm: các mục liệt kê (a, b, c...) trong văn bản pháp lý thường là câu ngắn đứng độc lập — nhóm 3 câu liên tiếp có thể ghép các mục liệt kê không liên quan với nhau, hoặc tách một câu quan trọng khỏi ngữ cảnh của cả đoạn/mục cha.
+- **Code snippet (nếu custom):** *(không dùng custom — dùng `SentenceChunker` có sẵn trong `src/chunking.py`)*
 
 ### So Sánh Giữa Các Thành Viên
 

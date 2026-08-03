@@ -1,8 +1,8 @@
 # Báo Cáo Cá Nhân — Lab 7: Embedding & Vector Store
 
-**Họ tên:** [Tên sinh viên]
+**Họ tên:** Ngô Minh Khôi
 **Nhóm:** [Tên nhóm]
-**Ngày:** [Ngày nộp]
+**Ngày:** 03/08/2026
 
 > **Nộp 1 bản / sinh viên.** Phần nhóm (lựa chọn tài liệu, thiết kế chiến lược, bộ câu hỏi đánh giá, demo) nộp chung 1 bản trong `REPORT_NHOM.md`. Chi tiết thang điểm: `docs/SCORING.md`.
 
@@ -166,15 +166,17 @@ tests/test_solution.py::TestEmbeddingStoreDeleteDocument::test_delete_returns_tr
 
 Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân của bạn trong gói `src`. **5 câu hỏi này phải trùng với các thành viên cùng nhóm** (xem `REPORT_NHOM.md`).
 
+> Cấu hình: `RecursiveChunker(chunk_size=500)` (chiến lược cá nhân đã chọn, xem Mục 2 `REPORT_NHOM.md`) + `LocalEmbedder`, chạy qua `scripts/run_benchmark.py` trên corpus `data/_test_crawl`.
+
 | # | Câu hỏi (Query) | Top-1 Chunk truy xuất được (tóm tắt) | Điểm Score | Có liên quan không? (Relevant) | Câu trả lời của Agent (tóm tắt) |
 |---|-------|--------------------------------|-------|-----------|------------------------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+| 1 | Thời hạn trả hàng/hoàn tiền | "3.2. Người Mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 15 (mười lăm) ngày kể từ lúc đơn hàng được cập nhật giao hàng thành công" (`k4-returns-policy`) | 0.808 | Có — khớp chính xác câu gold answer | Context trích đúng đoạn 15 ngày; agent demo echo lại đúng nội dung |
+| 2 | Yêu cầu hình ảnh khi đăng bán *(lọc `customer_role=seller`)* | "a. Hình ảnh sản phẩm phải là ảnh chụp rõ, chi tiết tình trạng sản phẩm..." (`k4-seller-listing`) | 0.689 | Có — đúng chủ đề, đúng tài liệu | Context về yêu cầu hình ảnh sản phẩm |
+| 3 | Vũ khí/vật dụng bị cấm | "e. Cung cấp các dịch vụ như: nạp tiền điện tử, tuyển dụng..." (`k4-operating-regulations`) — câu boilerplate trùng lặp, **lạc chủ đề** | 0.731 | Một phần — top-1/2 lạc sang câu trùng lặp về "dịch vụ bị cấm", top-3 mới đúng (súng hơi nước, kiếm/mác/lê/dao găm) | Context sai chủ đề ở top-1 (xem phân tích lỗi ở `REPORT_NHOM.md`) |
+| 4 | Trách nhiệm bảo hành | "Người Bán có trách nhiệm tiếp nhận bảo hành sản phẩm, dịch vụ cho Người Mua như cam kết trong Chính sách bảo hành sản phẩm của Người bán..." (`k4-operating-regulations`) | 0.788 | Có — khớp chính xác câu gold answer (chiến lược **duy nhất** trong 3 chiến lược làm được điều này, xem Mục 3 `REPORT_NHOM.md`) | Context trích đúng câu trả lời về bảo hành |
+| 5 | Hoàn phí Dịch Vụ Hiển Thị | "d. Thanh Toán Phí Dịch Vụ Hiển Thị Trang Chủ - Tối Ưu Độ Phủ Thương Hiệu..." (`k4-terms-of-use-for-display-services`) | 0.736 | Có — đúng tài liệu; top-3 có thêm câu "không thể hủy/hoàn tiền" | Context về cách thanh toán phí, đúng chủ đề nhưng chưa trích câu "không hoàn tiền" ở top-1 |
 
-**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** __ / 5
+**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** 5 / 5 (câu 3 chỉ đúng ở top-3, các câu còn lại đúng ngay từ top-1)
 
 **Điều hay nhất tôi học được từ thành viên khác / nhóm khác (qua demo):**
 > *Viết 2-3 câu:*
